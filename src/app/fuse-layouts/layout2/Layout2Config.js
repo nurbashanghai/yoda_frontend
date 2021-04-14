@@ -2,7 +2,7 @@ const config = {
 	title: 'Layout 2 - Horizontal',
 	defaults: {
 		mode: 'container',
-		containerWidth: 1120,
+		containerWidth: "100%",
 		navbar: {
 			display: true,
 			style: 'fixed'

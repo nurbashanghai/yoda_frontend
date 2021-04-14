@@ -70,7 +70,7 @@ function ProfilePage() {
 									variant="h4"
 									color="inherit"
 								>
-									John Doe
+									Akai
 								</Typography>
 							</motion.div>
 
