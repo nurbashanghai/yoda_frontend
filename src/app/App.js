@@ -24,8 +24,6 @@ const jss = create({
 	insertionPoint: document.getElementById('jss-insertion-point')
 });
 
-axios.defaults.baseURL = 'http://localhost8080';
-
 const generateClassName = createGenerateClassName({ disableGlobal: true });
 
 const App = () => {

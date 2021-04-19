@@ -43,14 +43,14 @@ function AnalyticsDashboardApp() {
 
 	return (
 		<div className="w-full">
-			<Widget1 data={widgets.widget1} />
+			{/* <Widget1 data={widgets.widget1} /> */}
 			<motion.div
 				className="flex flex-col md:flex-row sm:p-8 container"
 				variants={container}
 				initial="hidden"
 				animate="show"
 			>
-				<div className="flex flex-1 flex-col min-w-0 pt-16">
+				{/* <div className="flex flex-1 flex-col min-w-0 pt-16">
 					<Typography
 						component={motion.div}
 						variants={item}
@@ -99,9 +99,9 @@ function AnalyticsDashboardApp() {
 					<motion.div variants={item} className="widget w-full p-16 pb-32">
 						<Widget6 data={widgets.widget6} />
 					</motion.div>
-				</div>
+				</div> */}
 
-				<div className="flex flex-wrap w-full md:w-320 pt-16">
+				{/* <div className="flex flex-wrap w-full md:w-320 pt-16">
 					<div className="mb-32 w-full sm:w-1/2 md:w-full">
 						<Typography
 							component={motion.div}
@@ -145,7 +145,7 @@ function AnalyticsDashboardApp() {
 							<Widget9 data={widgets.widget9} />
 						</motion.div>
 					</div>
-				</div>
+				</div> */}
 			</motion.div>
 		</div>
 	);
