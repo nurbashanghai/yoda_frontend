@@ -59,7 +59,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				email: obj.email,
 				settings: {
 					layout: {
-						style: 'layout2',
+						style: 'layout1',
 						config: {
 							mode: 'boxed',
 							scroll: 'content',
@@ -119,11 +119,11 @@ class JwtService extends FuseUtils.EventEmitter {
 					if (response.data.user) {
 						this.setSession(response.data.access_token);
 						resolve(this.setDefault(response.data.user));
-					} else {
-						alert('Not logged')
-						reject(response.data.error);
 					}
-				});
+				}).catch(errors => {
+					console.log(errors.response.data, ' jwt service')
+					reject(errors.response.data)
+				})
 		});
 	};
 
@@ -138,8 +138,10 @@ class JwtService extends FuseUtils.EventEmitter {
 				.then(response => {
 					console.log(response, ' pidarskii response');
 					if (response.data.user) {
+						let res = response.data.user;
+						res.role = res.role.toLowerCase(); // 
 						this.setSession(response.data.access_token);
-						resolve(this.setDefault(response.data.user));
+						resolve(this.setDefault(res));
 					} else {
 						this.logout();
 						reject(new Error('Failed to login with token.'));

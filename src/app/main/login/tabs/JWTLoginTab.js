@@ -11,6 +11,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
 import * as yup from 'yup';
 import _ from '@lodash';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+
+const notify = () => toast("Moment please");
 
 /**
  * Form Validation Schema
@@ -22,6 +28,7 @@ const schema = yup.object().shape({
 		.required('Please enter your password.')
 		.min(4, 'Password is too short - should be 4 chars minimum.')
 });
+
 
 const defaultValues = {
 	email: '',
@@ -56,6 +63,7 @@ function JWTLoginTab(props) {
 	}, [login.errors, setError]);
 
 	function onSubmit(model) {
+		notify()
 		dispatch(submitLogin(model));
 	}
 
@@ -179,8 +187,13 @@ function JWTLoginTab(props) {
 					</tr>
 				</tbody>
 			</table>
+			<ToastContainer />
 		</div>
 	);
 }
 
-export default JWTLoginTab;
+function mapStateToProps({}){
+
+}
+
+export default withRouter(connect(mapStateToProps, null)(JWTLoginTab));

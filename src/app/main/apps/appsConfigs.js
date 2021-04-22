@@ -1,3 +1,4 @@
+import landingConfig from 'app/landing/LandingConfig';
 import AcademyAppConfig from './academy/AcademyAppConfig';
 import CalendarAppConfig from './calendar/CalendarAppConfig';
 import ChatAppConfig from './chat/ChatAppConfig';
@@ -23,7 +24,8 @@ const appsConfigs = [
 	ECommerceAppConfig,
 	ScrumboardAppConfig,
 	AcademyAppConfig,
-	NotesAppConfig
+	NotesAppConfig,
+	landingConfig
 ];
 
 export default appsConfigs;

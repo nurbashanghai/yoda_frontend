@@ -1,4 +1,5 @@
 import FuseUtils from '@fuse/utils';
+import landingConfig from 'app/landing/LandingConfig';
 import appsConfigs from 'app/main/apps/appsConfigs';
 import authRoleExamplesConfigs from 'app/main/auth/authRoleExamplesConfigs';
 import CallbackConfig from 'app/main/callback/CallbackConfig';
@@ -19,7 +20,8 @@ const routeConfigs = [
 	LogoutConfig,
 	LoginConfig,
 	RegisterConfig,
-	LogoutConfig,
+	landingConfig,
+	// LogoutConfig,
 	CallbackConfig
 ];
 
@@ -27,16 +29,18 @@ const routes = [
 	// if you want to make whole app auth protected by default change defaultAuth for example:
 	// ...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin','staff','user']),
 	// The individual route configs which has auth option won't be overridden.
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs, null),
+	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'user']),
 	// ...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'user']),
 	{
 		path: '/',
 		exact: true,
-		component: () => <Redirect to="/apps/dashboards/analytics" />
+		component: () => <Redirect to="/" />
 	},
 	{
-		component: () => <Redirect to="/pages/errors/error-404" />
+		component: () => <Redirect to="/landing" />
 	}
 ];
 
 export default routes;
+
+

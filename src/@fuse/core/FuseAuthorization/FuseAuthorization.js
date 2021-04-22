@@ -35,6 +35,8 @@ class FuseAuthorization extends Component {
 		const { location, userRole } = props;
 		const { pathname } = location;
 
+		console.log('worked')
+
 		const matched = matchRoutes(state.routes, pathname)[0];
 
 		return {
@@ -42,10 +44,13 @@ class FuseAuthorization extends Component {
 		};
 	}
 
-	redirectRoute() {
+	redirectRoute() { // ???
 		const { location, userRole, history } = this.props;
 		const { pathname, state } = location;
 		const redirectUrl = state && state.redirectUrl ? state.redirectUrl : '/';
+
+		console.log(location, 'THIS LOCATION')
+		console.log(this.props, 'THIS PROPS')
 
 		/*
         User is guest
@@ -53,7 +58,7 @@ class FuseAuthorization extends Component {
         */
 		if (!userRole || userRole.length === 0) {
 			history.push({
-				pathname: '/login',
+				pathname: '/landing',
 				state: { redirectUrl: pathname }
 			});
 		} else {

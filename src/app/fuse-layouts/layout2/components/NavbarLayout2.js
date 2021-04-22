@@ -16,8 +16,8 @@ function NavbarLayout2(props) {
 	const classes = useStyles(props);
 
 	return (
-		<div className={clsx('w-full shadow-md', classes.root, props.className)}>
-			<div
+		<>
+			{/* <div
 				className={clsx(
 					'flex flex-auto justify-between items-center w-full h-full container p-0 lg:px-24 z-20'
 				)}
@@ -29,8 +29,8 @@ function NavbarLayout2(props) {
 				<FuseScrollbars className="flex h-full items-center">
 					<Navigation className="w-full" layout="horizontal" />
 				</FuseScrollbars>
-			</div>
-		</div>
+			</div> */}
+		</>
 	);
 }
 

@@ -6,10 +6,6 @@ import { memo } from 'react';
 function RightSideLayout3() {
 	return (
 		<>
-			<ChatPanel />
-
-			<QuickPanel />
-
 			<NotificationPanel />
 		</>
 	);
