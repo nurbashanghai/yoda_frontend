@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -6,7 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitRegister } from 'app/auth/store/registerSlice';
+import { submitRegister, submitRegisterMentor } from 'app/auth/store/registerSlice';
 import * as yup from 'yup';
 import _ from '@lodash';
 
@@ -34,6 +35,8 @@ function JWTRegisterTab(props) {
 	const dispatch = useDispatch();
 	const authRegister = useSelector(({ auth }) => auth.register);
 
+	const [mentor, setMentor] = useState(false);
+
 	const { control, formState, handleSubmit, reset, setError } = useForm({
 		mode: 'onChange',
 		defaultValues,
@@ -52,7 +55,15 @@ function JWTRegisterTab(props) {
 	}, [authRegister.errors, setError]);
 
 	function onSubmit(model) {
-		dispatch(submitRegister(model));
+		if(mentor){
+			let mentorModel = {
+				...model,
+				mentor
+			}
+			dispatch(submitRegisterMentor(mentorModel));
+		} else {
+			dispatch(submitRegister(model));
+		}
 	}
 
 	return (
@@ -161,6 +172,35 @@ function JWTRegisterTab(props) {
 						/>
 					)}
 				/>
+
+				<Controller
+					name="avatar"
+					control={control}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							className="mb-16"
+							type="text"
+							label="Avatar"
+							error={!!errors.passwordConfirm}
+							helperText={errors?.passwordConfirm?.message}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="end">
+										<Icon className="text-20" color="action">
+											vpn_key
+										</Icon>
+									</InputAdornment>
+								)
+							}}
+							variant="outlined"
+							required
+						/>
+					)}
+				/>
+
+				<h6>Are you mentor?</h6>
+				<input type='checkbox' value={mentor} onChange={() => setMentor(true)} />
 
 				<Button
 					type="submit"

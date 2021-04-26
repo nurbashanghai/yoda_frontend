@@ -75,8 +75,8 @@ function ProjectDashboardAppHeader(props) {
 		<div className="flex flex-col justify-between flex-1 min-w-0 px-24 pt-24">
 			<div className="flex justify-between items-center">
 				<div className="flex items-center min-w-0">
-					{user.data.photoURL ? (
-						<Avatar className="w-52 h-52 sm:w-64 sm:h-64" alt="user photo" src={user.data.photoURL} />
+					{user.avatar ? (
+						<Avatar className="w-52 h-52 sm:w-64 sm:h-64" alt="user photo" src={user.avatar} />
 					) : (
 						<Avatar className="w-52 h-52 sm:w-64 sm:h-64">{user.data.displayName[0]}</Avatar>
 					)}

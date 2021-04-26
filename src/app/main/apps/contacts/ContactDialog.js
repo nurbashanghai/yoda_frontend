@@ -11,9 +11,12 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import axios from 'axios';
+
 
 import _ from '@lodash';
 import * as yup from 'yup';
@@ -49,6 +52,9 @@ const schema = yup.object().shape({
 });
 
 function ContactDialog(props) {
+	const [modal, setModal] = useState(false);
+	const [mentor, setMentor] = useState({});
+	console.log(props, ' props in contact dialog')
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ contactsApp }) => contactsApp.contacts.contactDialog);
 
@@ -87,6 +93,19 @@ function ContactDialog(props) {
 		}
 	}, [contactDialog.data, contactDialog.type, reset]);
 
+	console.log(contactDialog.data, ' data in contact dialog asd')
+
+	async function sendOrder(obj){
+		const token = 'Bearer ' + localStorage.getItem('jwt_access_token');
+		await axios.post('http://localhost:8080/api/user/createorder',
+			obj,
+			{
+				headers: {'Authorization': token}
+			})
+		.then(res => console.log(res)).catch((err) => console.log(err));
+			setModal(false);
+	}
+
 	/**
 	 * On Dialog Open
 	 */
@@ -94,6 +113,7 @@ function ContactDialog(props) {
 		if (contactDialog.props.open) {
 			initDialog();
 		}
+		console.log(contactDialog.data, ' !!!!!!!!!! in useEffect')
 	}, [contactDialog.props.open, initDialog]);
 
 	/**
@@ -136,7 +156,7 @@ function ContactDialog(props) {
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						{contactDialog.type === 'new' ? 'New Contact' : 'Edit Contact'}
+						{contactDialog.type === 'new' ? 'New Contact' : 'Details'}
 					</Typography>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
@@ -151,213 +171,19 @@ function ContactDialog(props) {
 			<form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:overflow-hidden">
 				<DialogContent classes={{ root: 'p-24' }}>
 					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">account_circle</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="name"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Name"
-									id="name"
-									error={!!errors.name}
-									helperText={errors?.name?.message}
-									variant="outlined"
-									required
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20" />
-
-						<Controller
-							control={control}
-							name="lastName"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Last name"
-									id="lastName"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">star</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="nickname"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Nickname"
-									id="nickname"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">phone</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="phone"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Phone"
-									id="phone"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
+						<Typography id='name' >
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="email"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Email"
-									id="email"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
+						</div> Mentor: {contactDialog.data?.email ? contactDialog.data.email : ''}
+						</Typography>
 					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">domain</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="company"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Company"
-									id="company"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
+					<div>
+						<h6>Main Skills:</h6>
+						{contactDialog.data?.skills.map(item => (
+							<div>{item}</div>
+						))}
 					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">work</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="jobTitle"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Job title"
-									id="jobTitle"
-									name="jobTitle"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">cake</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="birthday"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									id="birthday"
-									label="Birthday"
-									type="date"
-									InputLabelProps={{
-										shrink: true
-									}}
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">home</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="address"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Address"
-									id="address"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">note</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="notes"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Notes"
-									id="notes"
-									variant="outlined"
-									multiline
-									rows={5}
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
+					
 				</DialogContent>
 
 				{contactDialog.type === 'new' ? (
@@ -375,24 +201,45 @@ function ContactDialog(props) {
 					</DialogActions>
 				) : (
 					<DialogActions className="justify-between p-4 pb-16">
-						<div className="px-16">
-							<Button
-								variant="contained"
-								color="secondary"
-								type="submit"
-								disabled={_.isEmpty(dirtyFields) || !isValid}
-							>
-								Save
-							</Button>
-						</div>
-						<IconButton onClick={handleRemove}>
-							<Icon>delete</Icon>
-						</IconButton>
+						{
+							modal ? (
+								<div>
+									Choose Date: 
+									<input type='date' name='date' onChange={(e) => {
+										let data = {
+											...mentor,
+											date: e.target.value
+										}
+										setMentor(data)
+									}}/>
+									<button onClick={() => sendOrder(mentor)} >Order</button>
+								</div>
+							) : (
+								<div className="px-16">
+									<Button
+										variant="contained"
+										color="secondary"
+										onClick={() => {
+											setMentor({mentorId: contactDialog.data.id})
+											setModal(true)}
+										}
+									>
+										Book
+									</Button>
+								</div>
+							)
+						}
 					</DialogActions>
 				)}
 			</form>
+
 		</Dialog>
 	);
 }
 
-export default ContactDialog;
+function mapStateToProps({auth}){
+    return { thisUser: auth.user }
+}
+
+export default withRouter(connect(mapStateToProps, null)(ContactDialog));
+

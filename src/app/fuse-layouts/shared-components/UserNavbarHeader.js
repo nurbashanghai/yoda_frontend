@@ -52,8 +52,8 @@ function UserNavbarHeader(props) {
 					className={clsx(classes.avatar, 'avatar w-72 h-72 p-8 box-content')}
 					alt="user photo"
 					src={
-						user.data.photoURL && user.data.photoURL !== ''
-							? user.data.photoURL
+						user.avatar && user.avatar !== ''
+							? user.avatar
 							: 'assets/images/avatars/profile.jpg'
 					}
 				/>

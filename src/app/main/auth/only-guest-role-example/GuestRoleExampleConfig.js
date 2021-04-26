@@ -11,7 +11,7 @@ const GuestRoleExampleConfig = {
 	auth: authRoles.onlyGuest, // ['guest']
 	routes: [
 		{
-			path: '/auth/landing',
+			path: '/login',
 			component: Landing
 		}
 	]

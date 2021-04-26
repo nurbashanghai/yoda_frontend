@@ -43,8 +43,6 @@ function ProfilePage({userRole}) {
 		setSelectedTab(value);
 	}
 
-	console.log(userRole)
-
 	return (
 		<FusePageSimple
 			classes={{
@@ -61,7 +59,7 @@ function ProfilePage({userRole}) {
 						<motion.div initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.1 } }}>
 							<Avatar
 								className={clsx(classes.avatar, '-mt-64  w-128 h-128')}
-								src={userRole.data.photoURL}
+								src={userRole.avatar}
 							/>
 						</motion.div>
 						<div className="flex flex-col md:flex-row flex-1 items-center justify-between p-8">
@@ -102,18 +100,12 @@ function ProfilePage({userRole}) {
 						}}
 					>
 						<Tab className="text-14 font-semibold min-h-40 min-w-64 mx-4" disableRipple label="Profile" />
-						<Tab
-							className="text-14 font-semibold min-h-40 min-w-64 mx-4"
-							disableRipple
-							label="Photos & Videos"
-						/>
 					</Tabs>
 				</>
 			}
 			content={
 				<div className="p-16 sm:p-24">
-					{selectedTab === 0 && <AboutTab />}
-					{selectedTab === 1 && <PhotosVideosTab />}
+					{selectedTab === 0 && <AboutTab user={userRole}/>}
 				</div>
 			}
 		/>

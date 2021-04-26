@@ -5,7 +5,7 @@ const locale = {
 	ECOMMERCE: 'E-Commerce',
 	ACADEMY: 'Academy',
 	MAIL: 'Mail',
-	TODO: 'To-Do',
+	TODO: 'ADMIN',
 	FILE_MANAGER: 'File Manager',
 	CONTACTS: 'Contacts',
 	CHAT: 'Chat',

@@ -47,6 +47,7 @@ function JWTLoginTab(props) {
 	const { isValid, dirtyFields, errors } = formState;
 
 	const [showPassword, setShowPassword] = useState(false);
+	const [mentor, setMentor] = useState(false);
 
 	useEffect(() => {
 		setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
@@ -63,8 +64,7 @@ function JWTLoginTab(props) {
 	}, [login.errors, setError]);
 
 	function onSubmit(model) {
-		notify()
-		dispatch(submitLogin(model));
+		dispatch(submitLogin(model, mentor));
 	}
 
 	return (
@@ -125,17 +125,41 @@ function JWTLoginTab(props) {
 					)}
 				/>
 
-				<Button
-					type="submit"
-					variant="contained"
-					color="primary"
-					className="w-full mx-auto mt-16"
-					aria-label="LOG IN"
-					disabled={_.isEmpty(dirtyFields) || !isValid}
-					value="legacy"
-				>
-					Login
-				</Button>
+				{
+					mentor ? (
+						<>
+						<Button
+							type="submit"
+							variant="contained"
+							color="primary"
+							className="w-full mx-auto mt-16"
+							aria-label="LOG IN"
+							disabled={_.isEmpty(dirtyFields) || !isValid}
+							value="legacy"
+						>
+							Login as a Mentor
+						</Button>
+						<Button onClick={() => setMentor(false)} >Switch to User</Button>
+						</>
+						
+					) : (
+						<>
+						<Button
+							type="submit"
+							variant="contained"
+							color="primary"
+							className="w-full mx-auto mt-16"
+							aria-label="LOG IN"
+							disabled={_.isEmpty(dirtyFields) || !isValid}
+							value="legacy"
+						>
+							Login as User
+						</Button>
+						<Button onClick={() => setMentor(true)} >Switch to Mentor</Button>
+						</>
+					)
+				}
+
 			</form>
 
 			<table className="w-full mt-32 text-center">

@@ -355,7 +355,6 @@ class FuseUtils {
 		/*
             Check if user role is string,
             */
-		console.log(authArr.includes("USER"), 'THIS IS USER CHECK')
 		return authArr.includes(userRole);
 	}
 

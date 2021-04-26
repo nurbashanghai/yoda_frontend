@@ -23,7 +23,7 @@ const landingConfig = {
 			}
 		}
 	},
-    auth: authRoles.user,
+    auth: authRoles.onlyGuest,
     routes: [
         {
             path: '/landing',

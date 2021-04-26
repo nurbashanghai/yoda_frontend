@@ -47,7 +47,7 @@ const pagesConfigs = [
 	PricingStyle1PageConfig,
 	// PricingStyle2PageConfig,
 	// PricingStyle3PageConfig,
-	ProfilePageConfig,
+	// ProfilePageConfig,
 	// ClassicSearchPageConfig,
 	ModernSearchPageConfig,
 	// FaqPageConfig,

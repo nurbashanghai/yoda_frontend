@@ -7,6 +7,7 @@ import DocumentationConfig from 'app/main/documentation/DocumentationConfig';
 import LoginConfig from 'app/main/login/LoginConfig';
 import LogoutConfig from 'app/main/logout/LogoutConfig';
 import pagesConfigs from 'app/main/pages/pagesConfigs';
+import ProfilePageConfig from 'app/main/pages/profile/ProfilePageConfig';
 import RegisterConfig from 'app/main/register/RegisterConfig';
 import UserInterfaceConfig from 'app/main/user-interface/UserInterfaceConfig';
 import { Redirect } from 'react-router-dom';
@@ -17,12 +18,12 @@ const routeConfigs = [
 	...authRoleExamplesConfigs,
 	UserInterfaceConfig,
 	DocumentationConfig,
+	// ProfilePageConfig,
 	LogoutConfig,
 	LoginConfig,
 	RegisterConfig,
-	landingConfig,
-	// LogoutConfig,
-	CallbackConfig
+	// landingConfig,
+	// CallbackConfig 
 ];
 
 const routes = [
@@ -37,7 +38,7 @@ const routes = [
 		component: () => <Redirect to="/" />
 	},
 	{
-		component: () => <Redirect to="/landing" />
+		component: () => <Redirect to="/login" />
 	}
 ];
 

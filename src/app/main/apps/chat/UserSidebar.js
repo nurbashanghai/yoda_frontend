@@ -55,6 +55,7 @@ function UserSidebar(props) {
 		}
 
 		const newUser = { ...user, ...form };
+		console.log(newUser, ' user!!!!!2319823091283019238099')
 
 		if (!_.isEqual(user, newUser)) {
 			updateUser(newUser);

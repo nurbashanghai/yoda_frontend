@@ -105,29 +105,50 @@ class JwtService extends FuseUtils.EventEmitter {
 		});
 	};
 
-	signInWithEmailAndPassword = (email, password) => {
-		console.log(email, password)
-		return new Promise((resolve, reject) => {
-			this.axiosInstance
-				.post('/api/user/login', {
-					data: {
-						"email": email,
-						"password": password
-					}
-				})
-				.then(response => {
-					if (response.data.user) {
-						this.setSession(response.data.access_token);
-						resolve(this.setDefault(response.data.user));
-					}
-				}).catch(errors => {
-					console.log(errors.response.data, ' jwt service')
-					reject(errors.response.data)
-				})
-		});
+	signInWithEmailAndPassword = (email, password, mentor) => {
+		if(!mentor){
+			return new Promise((resolve, reject) => {
+				this.axiosInstance
+					.post('/api/user/login', {
+						data: {
+							"email": email,
+							"password": password
+						}
+					})
+					.then(response => {
+						if (response.data.user) {
+							this.setSession(response.data.access_token);
+							resolve(this.setDefault(response.data.user));
+						}
+					}).catch(errors => {
+						console.log(errors.response.data, ' jwt service')
+						reject(errors.response.data)
+					})
+			});
+		} else {
+			return new Promise((resolve, reject) => {
+				this.axiosInstance
+					.post('/api/user/login/mentor', {
+						data: {
+							"email": email,
+							"password": password
+						}
+					})
+					.then(response => {
+						if (response.data.user) {
+							this.setSession(response.data.access_token);
+							resolve(this.setDefault(response.data.user));
+						}
+					}).catch(errors => {
+						console.log(errors.response.data, ' jwt service')
+						reject(errors.response.data)
+					})
+			});
+		}
+		
 	};
 
-	signInWithToken = () => { // починить гавно
+	signInWithToken = () => { 
 		return new Promise((resolve, reject) => {
 			this.axiosInstance
 				.get('/api/user/verify', {

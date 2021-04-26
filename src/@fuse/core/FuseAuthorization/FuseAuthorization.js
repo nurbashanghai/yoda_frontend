@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { matchRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
+import { LEFT } from 'react-swipeable';
 
 class FuseAuthorization extends Component {
 	constructor(props, context) {
@@ -45,9 +46,10 @@ class FuseAuthorization extends Component {
 	}
 
 	redirectRoute() { // ???
-		const { location, userRole, history } = this.props;
+		let { location, userRole, history } = this.props;
 		const { pathname, state } = location;
 		const redirectUrl = state && state.redirectUrl ? state.redirectUrl : '/';
+		const redirectLoggedIn = '/profile'
 
 		console.log(location, 'THIS LOCATION')
 		console.log(this.props, 'THIS PROPS')
@@ -62,13 +64,14 @@ class FuseAuthorization extends Component {
 				state: { redirectUrl: pathname }
 			});
 		} else {
+			// userRole = ['user']
 			/*
         User is member
         User must be on unAuthorized page or just logged in
         Redirect to dashboard or redirectUrl
         */
 			history.push({
-				pathname: redirectUrl
+				pathname: redirectLoggedIn
 			});
 		}
 	}

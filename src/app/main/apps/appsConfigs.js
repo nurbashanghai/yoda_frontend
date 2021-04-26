@@ -1,4 +1,5 @@
 import landingConfig from 'app/landing/LandingConfig';
+import ProfilePageConfig from '../pages/profile/ProfilePageConfig';
 import AcademyAppConfig from './academy/AcademyAppConfig';
 import CalendarAppConfig from './calendar/CalendarAppConfig';
 import ChatAppConfig from './chat/ChatAppConfig';
@@ -25,7 +26,8 @@ const appsConfigs = [
 	ScrumboardAppConfig,
 	AcademyAppConfig,
 	NotesAppConfig,
-	landingConfig
+	landingConfig,
+	ProfilePageConfig		// это импорт компонента с настройками роутов
 ];
 
 export default appsConfigs;

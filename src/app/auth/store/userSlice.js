@@ -119,18 +119,18 @@ export const logoutUser = () => async (dispatch, getState) => {
 	}
 
 	history.push({
-		pathname: '/'
+		pathname: '/login'
 	});
 
 	switch (user.from) {
-		case 'firebase': {
-			firebaseService.signOut();
-			break;
-		}
-		case 'auth0': {
-			auth0Service.logout();
-			break;
-		}
+		// case 'firebase': {
+		// 	firebaseService.signOut();
+		// 	break;
+		// }
+		// case 'auth0': {
+		// 	auth0Service.logout();
+		// 	break;
+		// }
 		default: {
 			jwtService.logout();
 		}
@@ -147,31 +147,31 @@ export const updateUserData = user => async (dispatch, getState) => {
 		return;
 	}
 	switch (user.from) {
-		case 'firebase': {
-			firebaseService
-				.updateUserData(user)
-				.then(() => {
-					dispatch(showMessage({ message: 'User data saved to firebase' }));
-				})
-				.catch(error => {
-					dispatch(showMessage({ message: error.message }));
-				});
-			break;
-		}
-		case 'auth0': {
-			auth0Service
-				.updateUserData({
-					settings: user.data.settings,
-					shortcuts: user.data.shortcuts
-				})
-				.then(() => {
-					dispatch(showMessage({ message: 'User data saved to auth0' }));
-				})
-				.catch(error => {
-					dispatch(showMessage({ message: error.message }));
-				});
-			break;
-		}
+		// case 'firebase': {
+		// 	firebaseService
+		// 		.updateUserData(user)
+		// 		.then(() => {
+		// 			dispatch(showMessage({ message: 'User data saved to firebase' }));
+		// 		})
+		// 		.catch(error => {
+		// 			dispatch(showMessage({ message: error.message }));
+		// 		});
+		// 	break;
+		// }
+		// case 'auth0': {
+		// 	auth0Service
+		// 		.updateUserData({
+		// 			settings: user.data.settings,
+		// 			shortcuts: user.data.shortcuts
+		// 		})
+		// 		.then(() => {
+		// 			dispatch(showMessage({ message: 'User data saved to auth0' }));
+		// 		})
+		// 		.catch(error => {
+		// 			dispatch(showMessage({ message: error.message }));
+		// 		});
+		// 	break;
+		// }
 		default: {
 			jwtService
 				.updateUserData(user)
@@ -189,9 +189,9 @@ export const updateUserData = user => async (dispatch, getState) => {
 const initialState = {
 	role: [], // guest
 	data: {
-		displayName: 'Fuse',
+		displayName: 'Guest',
 		photoURL: 'assets/images/avatars/Velazquez.jpg',
-		email: 'johndoe@withinpixels.com',
+		email: 'Sign in',
 		shortcuts: ['calendar', 'mail', 'contacts', 'todo']
 	}
 };

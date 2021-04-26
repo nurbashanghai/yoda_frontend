@@ -5,14 +5,15 @@ import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';
 
 
-export const submitLogin = ({ email, password }) => async dispatch => {
+export const submitLogin = ({ email, password }, mentor) => async dispatch => {
 	return jwtService
-		.signInWithEmailAndPassword(email, password)
+		.signInWithEmailAndPassword(email, password, mentor)
 		.then(user => {
 			dispatch(setUserData(user));
 
 			return dispatch(loginSuccess());
 		})
+		.then(() => window.location.reload())
 		.catch(errors => {
 			console.log(errors, ' inside login slice catch')
 			return dispatch(loginError(errors));

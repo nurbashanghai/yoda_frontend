@@ -39,15 +39,15 @@ function TodoApp(props) {
 					root: 'w-full',
 					header: 'items-center min-h-72 h-72 sm:h-136 sm:min-h-136'
 				}}
-				header={<TodoHeader pageLayout={pageLayout} />}
-				contentToolbar={<TodoToolbar />}
+				// header={<TodoHeader pageLayout={pageLayout} />}
+				// contentToolbar={<TodoToolbar />}
 				content={<TodoList />}
-				leftSidebarHeader={<TodoSidebarHeader />}
-				leftSidebarContent={<TodoSidebarContent />}
+				// leftSidebarHeader={<TodoSidebarHeader />}
+				// leftSidebarContent={<TodoSidebarContent />}
 				ref={pageLayout}
 				innerScroll
 			/>
-			<TodoDialog />
+			{/* <TodoDialog /> */}
 		</>
 	);
 }

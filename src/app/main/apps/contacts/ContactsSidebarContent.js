@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { openNewContactDialog } from './store/contactsSlice';
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
 	listItem: {
@@ -41,7 +43,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ContactsSidebarContent(props) {
-	const user = useSelector(({ contactsApp }) => contactsApp.user);
+
+	let user = props.user
 
 	const dispatch = useDispatch();
 
@@ -56,22 +59,11 @@ function ContactsSidebarContent(props) {
 				className="rounded-0 shadow-none lg:rounded-16 lg:shadow"
 			>
 				<div className="p-24 flex items-center">
-					<Avatar alt={user.name} src={user.avatar} />
-					<Typography className="mx-12">{user.name}</Typography>
+					<Avatar alt={user.email} src={user.avatar} />
+					<Typography className="mx-12">{user.email}</Typography>
 				</div>
 
 				<Divider />
-
-				<div className="p-24">
-					<Button
-						variant="contained"
-						color="secondary"
-						className="w-full"
-						onClick={ev => dispatch(openNewContactDialog())}
-					>
-						New Contact
-					</Button>
-				</div>
 
 				<List className="pt-0 px-12">
 					<ListItem
@@ -84,7 +76,7 @@ function ContactsSidebarContent(props) {
 						<Icon className="list-item-icon text-16" color="action">
 							people
 						</Icon>
-						<ListItemText className="truncate" primary="All contacts" disableTypography />
+						<ListItemText className="truncate" primary="Mentors" disableTypography />
 					</ListItem>
 					<ListItem
 						button
@@ -96,7 +88,7 @@ function ContactsSidebarContent(props) {
 						<Icon className="list-item-icon text-16" color="action">
 							restore
 						</Icon>
-						<ListItemText className="truncate" primary="Frequently contacted" disableTypography />
+						<ListItemText className="truncate" primary="All Mentors" disableTypography />
 					</ListItem>
 					<ListItem
 						button
@@ -108,7 +100,7 @@ function ContactsSidebarContent(props) {
 						<Icon className="list-item-icon text-16" color="action">
 							star
 						</Icon>
-						<ListItemText className="truncate" primary="Starred contacts" disableTypography />
+						<ListItemText className="truncate" primary="Starred Mentors" disableTypography />
 					</ListItem>
 				</List>
 			</Paper>
@@ -116,4 +108,9 @@ function ContactsSidebarContent(props) {
 	);
 }
 
-export default ContactsSidebarContent;
+function mapStateToProps({auth}){
+    return { user: auth.user }
+}
+
+export default withRouter(connect(mapStateToProps, null)(ContactsSidebarContent));
+

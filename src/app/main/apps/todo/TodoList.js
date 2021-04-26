@@ -4,16 +4,32 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { selectTodos } from './store/todosSlice';
 import TodoListItem from './TodoListItem';
+import {withRouter, useHistory} from 'react-router-dom';
+import axios from 'axios';
 
 function TodoList(props) {
+	const history = useHistory()
 	const todos = useSelector(selectTodos);
 	const searchText = useSelector(({ todoApp }) => todoApp.todos.searchText);
 	const orderBy = useSelector(({ todoApp }) => todoApp.todos.orderBy);
 	const orderDescending = useSelector(({ todoApp }) => todoApp.todos.orderDescending);
 	const [filteredData, setFilteredData] = useState(null);
+	const [orders, setOrders] = useState([]);
+
+	async function getOrders(){
+		const token = 'Bearer ' + localStorage.getItem('jwt_access_token');
+		await axios.get('http://localhost:8080/api/user/orders',
+			{
+				headers: {'Authorization': token}
+			})
+		.then(res => {
+			console.log(res.data, ' res admin')
+			setOrders(res.data)
+		}).catch((err) => console.log(err));
+	}
 
 	useEffect(() => {
 		function getFilteredArray(entities, _searchText) {
@@ -28,6 +44,13 @@ function TodoList(props) {
 				_.orderBy(getFilteredArray(todos, searchText), [orderBy], [orderDescending ? 'desc' : 'asc'])
 			);
 		}
+
+		if(props.thisUser.email !== 'admin@gmail.com'){ // change to .env
+			history.push('/profile')
+		} else {
+			getOrders()
+		}
+
 	}, [todos, searchText, orderBy, orderDescending]);
 
 	if (!filteredData) {
@@ -62,16 +85,35 @@ function TodoList(props) {
 	};
 
 	return (
-		<List className="p-0">
-			<motion.div variants={container} initial="hidden" animate="show">
-				{filteredData.map(todo => (
-					<motion.div variants={item} key={todo.id}>
-						<TodoListItem todo={todo} />
-					</motion.div>
-				))}
-			</motion.div>
-		</List>
+		<div>
+			<h6 style={{padding: '20px'}} >ADMIN PANEL</h6>
+			<ul>
+				{
+					orders.map((item, index ) => (
+						<div style={{padding: '20px'}} key={Date.now() + index} >
+							<h6>Customer: {item.user.email}</h6>
+							<h6>Mentor: {item.mentor.email}</h6>
+							<div>Customer ordered this mentor to {item.date}</div>
+							<div>Pls verify orders with customer</div>
+						</div>
+					))
+				}
+			</ul>
+		{/* // <List className="p-0">
+		// 	<motion.div variants={container} initial="hidden" animate="show">
+		// 		{filteredData.map(todo => (
+		// 			<motion.div variants={item} key={todo.id}>
+		// 				<TodoListItem todo={todo} />
+		// 			</motion.div>
+		// 		))}
+		// 	</motion.div>
+		// </List> */}
+		</div>
 	);
 }
 
-export default TodoList;
+function mapStateToProps({auth}){
+    return { thisUser: auth.user }
+}
+
+export default withRouter(connect(mapStateToProps, null)(TodoList));

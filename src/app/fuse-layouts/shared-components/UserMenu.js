@@ -14,6 +14,7 @@ import { logoutUser } from 'app/auth/store/userSlice';
 function UserMenu(props) {
 	const dispatch = useDispatch();
 	const user = useSelector(({ auth }) => auth.user);
+	console.log(user, ' useruseruseursueruseursue')
 
 	const [userMenu, setUserMenu] = useState(null);
 
@@ -38,8 +39,8 @@ function UserMenu(props) {
 					</Typography>
 				</div>
 
-				{user.data.photoURL ? (
-					<Avatar className="md:mx-4" alt="user photo" src={user.data.photoURL} />
+				{user.avatar ? (
+					<Avatar className="md:mx-4" alt="user photo" src={user.avatar} />
 				) : (
 					<Avatar className="md:mx-4">{user.data.displayName[0]}</Avatar>
 				)}

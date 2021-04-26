@@ -1,9 +1,10 @@
+import Login from 'app/main/login/Login';
 import React from 'react';
 
 const Landing = () => {
     return (
         <div>
-            <h1>Yoda Landing Page</h1>
+            <Login/>
         </div>
     );
 };
